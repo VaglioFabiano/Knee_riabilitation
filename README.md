@@ -1,51 +1,59 @@
-# 🦿 Progetto 3D – Rilevamento Pose e Classificazione
+# 🦿 3D Project – Pose Detection and Classification
 
-Sistema completo per l’acquisizione, l’elaborazione e la classificazione di movimenti riabilitativi tramite camera RealSense, **MediaPipe**, **Unity 3D** e un modello **Transformer-based**.
+A complete system for acquiring, processing, and classifying rehabilitative movements using RealSense camera, **MediaPipe**, **Unity 3D**, and a **Transformer-based** model.
 
----
+## 📄 Link to the paper
 
-## 🚀 Funzionalità principali
+[📄 Paper_3D_gruppo 19.pdf](./Paper_3D_gruppo%2019.pdf)
 
-- ✅ Estrazione dei landmark 3D da video `.bag` (Intel RealSense) usando **MediaPipe**
-- ✅ Salvataggio dei dati in formato `.npy` per uso automatico
-- ✅ Classificazione dei movimenti tramite rete neurale **PoseTransformer3D**
-- ✅ Automazione del flusso tramite **server locale** che monitora una cartella di input
-- ✅ Interfaccia sviluppata in **Unity 3D** per interazione utente e feedback visivo
+## 🎥 Short demo
+
+<video src="Video_Interfaccia_Unity_Gruppo_19.mp4" controls width="600"></video>
 
 ---
 
-## 🧠 Panoramica del sistema
+## 🚀 Key Features
 
-Il sistema guida l’utente attraverso un flusso semplice e automatico:
+- ✅ Extraction of 3D landmarks from `.bag` videos (Intel RealSense) using **MediaPipe**
+- ✅ Saving data in `.npy` format for automated use
+- ✅ Classification of movements through a **PoseTransformer3D** neural network
+- ✅ Workflow automation via **local server** monitoring an input folder
+- ✅ User interface developed in **Unity 3D** for interaction and visual feedback
 
-1. **Avvio dell’interfaccia Unity**  
-   L’utente può scegliere tra due opzioni: avviare una **nuova registrazione** o consultare lo **storico delle acquisizioni precedenti**.
+---
 
-2. **Registrazione del movimento**  
-   Viene mostrato un countdown che permette al paziente di posizionarsi correttamente (vista laterale, arto interamente visibile).  
-   La registrazione dura circa **7 secondi**, durante i quali l’utente riceve **feedback visivo in tempo reale**.
+## 🧠 System Overview
 
-3. **Elaborazione e classificazione**  
-   Il video viene salvato in `.bag` e inviato a un **back-end locale**, che:
-   - Estrae i **landmark 3D** con MediaPipe
-   - Classifica il movimento con un modello Transformer
-   - Calcola gli **angoli articolari** frame per frame
+The system guides the user through a simple and automated workflow:
+
+1. **Launching the Unity Interface**  
+   The user can choose between two options: start a **new recording** or view the **history of previous acquisitions**.
+
+2. **Movement Recording**  
+   A countdown is shown to allow the patient to position themselves correctly (side view, full limb visibility).  
+   The recording lasts approximately **7 seconds**, during which the user receives **real-time visual feedback**.
+
+3. **Processing and Classification**  
+   The video is saved as `.bag` and sent to a **local backend**, which:
+   - Extracts **3D landmarks** with MediaPipe
+   - Classifies the movement with a Transformer model
+   - Computes **joint angles** frame by frame
 
 4. **Output**  
-   L’utente riceve:
-   - Il tipo di gesto riconosciuto
-   - L’angolo massimo rilevato
-   - Un **feedback personalizzato**
-   - Una rappresentazione 3D animata del movimento corretto
+   The user receives:
+   - The recognized gesture type
+   - The maximum detected angle
+   - **Personalized feedback**
+   - An animated 3D representation of the correct movement
 
-5. **Storico**  
-   Ogni esecuzione viene registrata con **data, ora e feedback**, consultabile dallo stesso utente.
+5. **History**  
+   Each session is saved with **date, time, and feedback**, viewable by the same user.
 
 ---
 
-## 📁 Struttura del progetto
+## 📁 Project Structure
 
-```
+````
 
 📦 Progetto 3D
 ├── App/ → Interfaccia grafica realizzata in Unity 3D
@@ -60,15 +68,15 @@ Il sistema guida l’utente attraverso un flusso semplice e automatico:
 
 ---
 
-## ⚙️ Setup ambiente
+## ⚙️ Environment Setup
 
-### 1. Clona il repository
+### 1. Clone the repository
 
 ```bash
 git clone https://github.com/tuo-utente/progetto-riabilitazione-3d.git
 ````
 
-### 2. Crea un ambiente virtuale
+### 2. Create a virtual environment
 
 ```bash
 cd landmark_extraction
@@ -76,7 +84,7 @@ python -m venv mp_env
 mp_env\Scripts\activate        # Su Windows
 ```
 
-### 3. Installa le dipendenze principali
+### 3. Install the main dependencies
 
 ```bash
 pip install mediapipe opencv-python pyrealsense2
@@ -84,73 +92,70 @@ pip install -r ../requirements.txt
 ```
 ---
 
-## 🧪 Uso – Training e Classificazione
+## 🧪 Usage – Training and Classification
 
-### 1. Prepara i dati in `data/`
+### 1. Prepare the data in data/
 
-Assicurati che la struttura e le etichette siano coerenti con quelle usate nel training.
+Make sure the structure and labels are consistent with those used during training.
 
-### 2. Avvia il training del modello
+### 2. Start model training
 
 ```bash
 python PoseDetector/main.py
 ```
 
-### 3. Avvia il server per la classificazione automatica
+### 3. Start the server for automatic classification
 
 ```bash
 python PoseDetector/server.py
 ```
 
-📂 Il server monitorerà la cartella `incoming_data/` e classificherà automaticamente ogni nuovo file `.npy` inserito.
+📂 The server will monitor the incoming_data/ folder and automatically classify each new .npy file added.
 
 ---
 
-## ❗ Problemi comuni (MediaPipe su Windows)
+## ❗ Common Issues (MediaPipe on Windows)
 
-### Errore: `ImportError: DLL load failed while importing _framework_bindings`
+### Error: `ImportError: DLL load failed while importing _framework_bindings`
 
-**Soluzioni:**
+**Solutions:**
 
-* Usa **Python 64-bit**
-* Crea l’ambiente virtuale con `venv` (non `conda`)
-* Aggiorna pip e setuptools:
+* Use **64-bit Python**
+* Create the virtual environment using `venv` (not `conda`)
+* Upgrade pip and setuptools:
 
   ```bash
   python -m pip install --upgrade pip setuptools wheel
+
   ```
-* Installa una versione stabile:
+* Restart your PC after installation
 
-  ```bash
-  pip install mediapipe==0.10.9
-  ```
-* Riavvia il PC dopo l’installazione
+### Error: `ModuleNotFoundError: No module named 'pyrealsense2'`
 
-### Errore: `ModuleNotFoundError: No module named 'pyrealsense2'`
+**Solutions:**
 
-**Soluzioni:**
-
-* Installa con:
+* Install with:
 
   ```bash
   pip install pyrealsense2
   ```
-* Verifica che l’ambiente virtuale sia attivo
+* Make sure the virtual environment is activated
+---
+
+## 💡 Tips
+
+* If you use **VS Code**, select the correct Python interpreter (`mp_env`) in the bottom right corner
+* Always activate the virtual environment before running scripts
+* If you work in a team, you can create a separate `dev-requirements.txt` file for development tools
 
 ---
 
-## 💡 Suggerimenti
 
-* Se usi **VS Code**, seleziona l’interprete Python corretto (`mp_env`) in basso a destra
-* Attiva sempre l’ambiente virtuale prima di lanciare gli script
-* Se lavori in team, puoi creare un file `dev-requirements.txt` separato per gli strumenti di sviluppo
+## 🧾 Credits
 
----
-
-## 🧾 Crediti
-
-* Interfaccia utente sviluppata in **Unity 3D**
-* Modelli 3D animati generati con **Mixamo** e perfezionati in **Blender**
-* Modello di classificazione basato su architettura **Transformer**
+* User interface developed in **Unity 3D**
+* 3D animated models generated with **Mixamo** and refined in **Blender**
+* Classification model based on **Transformer architecture**
 
 ---
+
